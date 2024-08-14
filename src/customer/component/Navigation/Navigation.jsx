@@ -30,7 +30,9 @@ function className(...classes) {
   return classes.filter(Boolean).join("");
 }
 export default function Navigation() {
-  const test = Boolean(0)
+
+  const test = Boolean(1)
+
   const [open, setOpen] = useState(false)
   const [openAuthModal, setOpenAuthModal] = useState(false);
   const [anchorEl, setAnchorEl] = useState(null);
@@ -56,7 +58,7 @@ export default function Navigation() {
   return (
     <div className="bg-white uppercase ">
       {/* Mobile menu */}
-      <Dialog open={open} onClose={setOpen} className="relative z-40 lg:hidden">
+      <Dialog open={open} onClose={setOpen} className="relative z-40 lg:hidden ">
         <DialogBackdrop
           transition
           className="fixed inset-0 bg-black bg-opacity-25 transition-opacity duration-300 ease-linear data-[closed]:opacity-0"
@@ -95,22 +97,22 @@ export default function Navigation() {
             <div className="space-y-6 border-t border-gray-200 px-4 py-6">
               {test ? (
                 <div className="flow-root">
-                  <a href="#" className="-m-2 block p-2 font-medium text-gray-900">
-                    Đăng xuất
-                  </a>
+                  <a href="#" className="-m-2 block p-3 font-medium text-gray-900">Trang Cá Nhân</a>
+                  <a href="#" className="-m-2 block p-4 font-medium text-gray-900">Đơn Hàng Của Tôi</a>
+                  <a href="#" className="-m-2 block p-4 font-medium text-gray-900">Đăng Xuất</a>
                 </div>) : (
                 <div className="flow-root">
-                
-                    <a href="#" className="-m-2 block p-4 font-medium text-gray-900">
-                      Sign in
-                    </a>
-         
-                
-                    <a href="#" className="-m-2 block p-4 font-medium text-gray-900">
-                      Create account
-                    </a>
-              
-                  </div>
+
+                  <a href="#" className="-m-2 block p-4 font-medium text-gray-900">
+                 ĐĂNG NHẬP
+                  </a>
+
+
+                  <a href="#" className="-m-2 block p-4 font-medium text-gray-900">
+                   ĐĂNG KÝ
+                  </a>
+
+                </div>
               )}
 
             </div>
