@@ -1,18 +1,18 @@
 
-import { Fragment, useState } from 'react'
+import { useState } from 'react'
 import {
   Button,
   Dialog,
   DialogBackdrop,
   DialogPanel,
-  MenuItem,
+
 
   PopoverGroup,
 
 
 } from '@headlessui/react'
 import { Bars3Icon, MagnifyingGlassIcon, ShoppingBagIcon, XMarkIcon } from '@heroicons/react/24/outline'
-import { ClassNames } from '@emotion/react'
+
 import { Avatar, Menu } from '@mui/material'
 import { deepPurple } from '@mui/material/colors'
 
@@ -26,18 +26,16 @@ const navigation = {
     { name: 'GIỚI THIỆU', href: '#' },
   ],
 }
-function className(...classes) {
-  return classes.filter(Boolean).join("");
-}
+
 export default function Navigation() {
 
   const test = Boolean(1)
 
   const [open, setOpen] = useState(false)
-  const [openAuthModal, setOpenAuthModal] = useState(false);
+  const [ setOpenAuthModal] = useState(false);
   const [anchorEl, setAnchorEl] = useState(null);
   const openUserMenu = Boolean(anchorEl);
-  const jwt = localStorage.getItem("jwt");
+  // const jwt = localStorage.getItem("jwt");
 
   const handleUserClick = (event) => {
     setAnchorEl(event.currentTarget);

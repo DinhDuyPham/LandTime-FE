@@ -19,7 +19,7 @@ import {
   FunnelIcon,
   MinusIcon,
   PlusIcon,
-  Squares2X2Icon,
+
 } from "@heroicons/react/20/solid";
 import ProductCard from "./ProductCard";
 import { Watch } from "../../Data/Data";
@@ -31,7 +31,8 @@ import {
   Radio,
   RadioGroup,
 } from "@mui/material";
-import FilterListIcon from "@mui/icons-material/FilterList";
+import { useLocation, useNavigate } from "react-router-dom";
+
 const sortOptions = [
   { name: "Giá: Thấp đến cao", href: "#", current: false },
   { name: "Giá: Cao đến thấp", href: "#", current: false },
@@ -43,6 +44,40 @@ function classNames(...classes) {
 
 export default function Product() {
   const [mobileFiltersOpen, setMobileFiltersOpen] = useState(false);
+  const location = useLocation();
+  const navigate = useNavigate();
+
+  const handleFilter = (value, sectionID) => {
+    const searchParams = new URLSearchParams(location.search);
+    let filterValues = searchParams.get(sectionID);
+    let updatedFilterValues = [];
+
+    if (filterValues) {
+      const filterArray = filterValues.split(",");
+      if (filterArray.includes(value)) {
+        updatedFilterValues = filterArray.filter((item) => item !== value);
+      } else {
+        updatedFilterValues = [...filterArray, value];
+      }
+    } else {
+      updatedFilterValues = [value];
+    }
+
+    if (updatedFilterValues.length > 0) {
+      searchParams.set(sectionID, updatedFilterValues.join(","));
+    } else {
+      searchParams.delete(sectionID);
+    }
+
+    navigate({ search: searchParams.toString() });
+  };
+  const handRadioFilterChange = (e, sectionID) => {
+    const searchParams = new URLSearchParams(location.search);
+    searchParams.set(sectionID, e.target.value);
+    const query = searchParams.toString();
+    navigate({ search: `?${query}` });
+  };
+  
 
   return (
     <div className="bg-white">
@@ -50,7 +85,7 @@ export default function Product() {
         {/* Mobile filter dialog */}
         <Dialog
           open={mobileFiltersOpen}
-          onClose={setMobileFiltersOpen}
+          onClose={() => setMobileFiltersOpen(false)}
           className="relative z-40 lg:hidden"
         >
           <DialogBackdrop
@@ -64,7 +99,6 @@ export default function Product() {
               className="relative ml-auto flex h-full w-full max-w-xs transform flex-col overflow-y-auto bg-white py-4 pb-12 shadow-xl transition duration-300 ease-in-out data-[closed]:translate-x-full"
             >
               <div className="flex items-center justify-between px-4">
-               
                 <button
                   type="button"
                   onClick={() => setMobileFiltersOpen(false)}
@@ -105,8 +139,8 @@ export default function Product() {
                         {section.options.map((option, optionIdx) => (
                           <div key={option.value} className="flex items-center">
                             <input
-                              defaultValue={option.value}
-                              defaultChecked={option.checked}
+                              onChange={() => handleFilter(option.value, section.id)}
+                              checked={option.checked}
                               id={`filter-mobile-${section.id}-${optionIdx}`}
                               name={`${section.id}[]`}
                               type="checkbox"
@@ -152,8 +186,8 @@ export default function Product() {
                         {section.options.map((option, optionIdx) => (
                           <div key={option.value} className="flex items-center">
                             <input
-                              defaultValue={option.value}
-                              defaultChecked={option.checked}
+                              onChange={() => handleFilter(option.value, section.id)}
+                              checked={option.checked}
                               id={`filter-mobile-${section.id}-${optionIdx}`}
                               name={`${section.id}[]`}
                               type="checkbox"
@@ -176,7 +210,7 @@ export default function Product() {
           </div>
         </Dialog>
 
-        <main className="mx-auto  px-4 sm:px-6 lg:px-20">
+        <main className="mx-auto px-4 sm:px-6 lg:px-20">
           <div className="flex items-baseline justify-between border-b border-gray-200 pb-3 pt-10">
             <h1 className="text-4xl font-bold tracking-tight text-gray-900">
               New Arrivals
@@ -218,13 +252,6 @@ export default function Product() {
                 </MenuItems>
               </Menu>
 
-              {/* <button
-                type="button"
-                className="-m-2 ml-5 p-2 text-gray-400 hover:text-gray-500 sm:ml-7"
-              >
-                <span className="sr-only">View grid</span>
-                <Squares2X2Icon aria-hidden="true" className="h-5 w-5" />
-              </button> */}
               <button
                 type="button"
                 onClick={() => setMobileFiltersOpen(true)}
@@ -243,10 +270,6 @@ export default function Product() {
 
             <div className="grid grid-cols-1 gap-x-8 gap-y-10 lg:grid-cols-5">
               <div>
-                <div className="flex justify-between items-center">
-                 
-                </div>
-
                 <form className="hidden lg:block">
                   {singleFilter.map((section) => (
                     <Disclosure
@@ -257,7 +280,6 @@ export default function Product() {
                       <>
                         <h3 className="-my-3 flow-root">
                           <DisclosureButton className="group flex w-full items-center justify-between bg-white py-3 text-sm text-gray-400 hover:text-gray-500">
-                            {/* <span className="font-medium "></span> */}
                             <FormLabel
                               sx={{ color: "black" }}
                               className="text-gray-900"
@@ -286,13 +308,12 @@ export default function Product() {
                                 name="radio-buttons-group"
                               >
                                 {section.options.map((option, optionIdx) => (
-                                  <>
-                                    <FormControlLabel
-                                      value={option.id}
-                                      control={<Radio />}
-                                      label={option.label}
-                                    />
-                                  </>
+                                  <FormControlLabel onChange={(e) => handRadioFilterChange(e, section.id)} 
+                                    key={option.id}
+                                    value={option.value}
+                                    control={<Radio />}
+                                    label={option.label}
+                                  />
                                 ))}
                               </RadioGroup>
                             </FormControl>
@@ -332,8 +353,8 @@ export default function Product() {
                               className="flex items-center"
                             >
                               <input
-                                defaultValue={option.value}
-                                defaultChecked={option.checked}
+                                onChange={() => handleFilter(option.value, section.id)}
+                                checked={option.checked}
                                 id={`filter-${section.id}-${optionIdx}`}
                                 name={`${section.id}[]`}
                                 type="checkbox"
@@ -355,17 +376,10 @@ export default function Product() {
               </div>
 
               {/* Product grid */}
-              {/* <div className="lg:col-span-4 w-full">
-                <div className="flex flex-wrap justify-center bg-white py-2 ">
-                  {Watch.map((item) => (
-                    <ProductCard product={item} />
-                  ))}
-                </div>
-              </div> */}
               <div className="lg:col-span-4 w-full border">
                 <div className="grid grid-cols-2 gap-4 lg:grid-cols-4 sm:grid-cols-3 xs:grid-cols-2">
-                  {Watch.map((item, index) => (
-                    <ProductCard key={index} product={item} />
+                  {Watch.map((item) => (
+                    <ProductCard key={item.id} product={item} />
                   ))}
                 </div>
               </div>

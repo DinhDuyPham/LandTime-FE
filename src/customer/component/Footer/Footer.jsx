@@ -31,7 +31,7 @@ const Footer = () => {
                     style={{ border: 0 }}
                     allowFullScreen=""
                     loading="lazy"
-                ></iframe>
+                />
             </Grid>
             <Grid item xs={12} sm={6} md={3} className='mb-6'>
                 <Typography className='pb-5 text-xl font-semibold'>FACEBOOK</Typography>
