@@ -5,8 +5,8 @@ import TikTokEmbed from '../Embed/TikTokEmbed';
 
 const Footer = () => {
     return (
-        <div className='bg-gray-800 text-white text-center mt-10 py-6'>
-        <Grid container spacing={2} className='max-w-6xl mx-auto flex justify-center'>
+        <div className='bg-gray-800 text-white text-center mt-10 pt-6 pb-1'>
+        <Grid container spacing={2} className='max-w-8xl mx-auto flex justify-center'>
             <Grid item xs={12} sm={6} md={3} className='mb-6'>
                 <Typography className='pb-5 text-xl font-semibold'>LANDTIME</Typography>
                 <ul className='list-disc list-inside pl-5 text-left'>
@@ -40,7 +40,7 @@ const Footer = () => {
                 </div>
             </Grid>
         </Grid>
-        <Grid item sx={12} className='pt-20'>
+        <Grid item sx={12} className='pt-10'>
             <Typography variant='body2' component="p" align='center'>Copyright 2024 &copy; LandTime</Typography>
         </Grid>
     </div>

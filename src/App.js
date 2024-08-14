@@ -1,7 +1,8 @@
-
-import './App.css';
-import Navigation from './customer/component/Navigation/Navigation';
-import HomePage from './customer/pages/HomePage/HomePage';
+import "./App.css";
+import Footer from "./customer/component/Footer/Footer";
+import Navigation from "./customer/component/Navigation/Navigation";
+import Product from "./customer/component/Product/Product";
+import HomePage from "./customer/pages/HomePage/HomePage";
 
 function App() {
   return (
@@ -9,9 +10,9 @@ function App() {
       <Navigation />
       <div>
         <HomePage />
+        <Product />
       </div>
-
-
+      <Footer />
     </div>
   );
 }
