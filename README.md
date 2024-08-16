@@ -1,7 +1,3 @@
-####################### 2h  47p
-https://www.youtube.com/watch?v=3jjxRz_egNY&ab_channel=CodeWithZosh
-
-
 
 # Getting Started with Create React App
 
